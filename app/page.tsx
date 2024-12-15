@@ -1,3 +1,5 @@
+// app/page.tsx
+
 "use client";
 
 import { useState } from "react";
@@ -69,7 +71,7 @@ export default function WinterFestival() {
       <Snowfall snowflakeCount={200} />
 
       <div className="flex flex-col items-center justify-center pt-8 relative z-10">
-        <h1 className="text-[12rem] leading-[1]">
+        <h1 className="text-center text-[12rem] leading-[1]">
           {content[lang].title.split("").map((letter, index) => (
             <span
               key={index}
@@ -80,12 +82,12 @@ export default function WinterFestival() {
           ))}
         </h1>
 
-        <div className="text-white text-[3rem] leading-[1.1] text-center mt-8">
+        <div className="text-white text-[3rem] leading-[1.1] text-center mt-8 space-y-4">
           <p>{content[lang].date}</p>
           <p>{content[lang].time}</p>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-8 space-y-4">
           {content[lang].features.map((item, index) => (
             <div
               key={index}
@@ -98,7 +100,7 @@ export default function WinterFestival() {
 
         <button
           onClick={() => setLang(lang === "en" ? "es" : "en")}
-          className={`mt-8 text-[2rem] px-6 py-2 ${
+          className={`mt-8 text-[2rem] px-6 py-2 font-bold text-white ${
             lang === "en" ? "bg-red-500" : "bg-green-500"
           }`}
         >
