@@ -73,7 +73,7 @@ export default function WinterFestival() {
 
       {/* Main content */}
       <div className="relative z-10">
-        <h1 className={`text-6xl mb-8 ${balsamiq.className}`}>
+        <h1 className={`text-[5rem] leading-tight ${balsamiq.className}`}>
           {content[lang].title.split("").map((letter, index) => (
             <span
               key={index}
@@ -84,14 +84,17 @@ export default function WinterFestival() {
           ))}
         </h1>
 
-        <div className={`text-white text-2xl mb-8 ${balsamiq.className}`}>
-          <p>{content[lang].date}</p>
-          <p>{content[lang].time}</p>
+        <div className={`text-white text-[2.5rem] mt-8 ${balsamiq.className}`}>
+          <p className="leading-tight">{content[lang].date}</p>
+          <p className="leading-tight">{content[lang].time}</p>
         </div>
 
-        <div className={`space-y-2 ${balsamiq.className}`}>
+        <div className={`mt-8 ${balsamiq.className}`}>
           {content[lang].features.map((item, index) => (
-            <div key={index} className="text-green-500 text-2xl">
+            <div
+              key={index}
+              className="text-green-500 text-[2.5rem] leading-tight"
+            >
               {item}
             </div>
           ))}
@@ -99,7 +102,7 @@ export default function WinterFestival() {
 
         <button
           onClick={() => setLang(lang === "en" ? "es" : "en")}
-          className={`mt-8 px-4 py-1 ${balsamiq.className} ${
+          className={`mt-8 px-4 py-1 text-[1.5rem] ${
             lang === "en" ? "bg-red-500" : "bg-green-500"
           }`}
         >
