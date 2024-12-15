@@ -121,7 +121,9 @@ export default function WinterFestival() {
               className="w-16 h-16"
               animate={{ y: [0, -10, 0] }}
               transition={{ repeat: Infinity, duration: 2, delay: index * 0.5 }}
-              ref={(el) => (imgRefs.current[index] = el)}
+              ref={(el) => {
+                imgRefs.current[index] = el;
+              }}
               onClick={() => {
                 const imgElement = imgRefs.current[index];
                 if (imgElement) {
