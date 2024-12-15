@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Snowfall from "react-snowfall";
 import { motion } from "framer-motion";
 
@@ -28,43 +28,48 @@ const content = {
   },
 };
 
-function Decorations() {
-  return (
-    <>
-      <motion.img
-        src="/placeholder.svg"
-        alt="Snowman"
-        className="absolute bottom-0 left-0 w-16 h-16"
-        animate={{ y: [0, -10, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
-      />
-      <motion.img
-        src="/placeholder.svg"
-        alt="Christmas Tree"
-        className="absolute bottom-0 left-20 w-16 h-16"
-        animate={{ rotate: [0, 5, -5, 0] }}
-        transition={{ repeat: Infinity, duration: 3 }}
-      />
-      <motion.img
-        src="/placeholder.svg"
-        alt="Gift"
-        className="absolute bottom-0 left-40 w-16 h-16"
-        animate={{ scale: [1, 1.1, 1] }}
-        transition={{ repeat: Infinity, duration: 1.5 }}
-      />
-      <motion.img
-        src="/placeholder.svg"
-        alt="Candy Cane"
-        className="absolute bottom-0 left-60 w-16 h-16"
-        animate={{ rotateY: 360 }}
-        transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
-      />
-    </>
-  );
-}
+// Function to get a random winter graphic
+const getRandomWinterGraphics = (count: number) => {
+  const winterGraphics = [
+    "003-cookie.svg",
+    "005-lights.svg",
+    "006-snow-globe.svg",
+    "007-christmas-card.svg",
+    "008-candle.svg",
+    "009-santa-claus.svg",
+    "011-sweater.svg",
+    "012-bells.svg",
+    "013-christmas-wreath.svg",
+    "014-cabin.svg",
+    "015-present.svg",
+    "017-coffee-cup.svg",
+    "018-matches.svg",
+    "019-snowflake.svg",
+    "020-candy.svg",
+    "021-bauble.svg",
+    "023-gingerbread-man.svg",
+    "024-mistletoe.svg",
+    "025-candy-cane.svg",
+    "026-bonfire.svg",
+  ];
+
+  const selectedGraphics = new Set<string>();
+  while (selectedGraphics.size < count) {
+    const randomIndex = Math.floor(Math.random() * winterGraphics.length);
+    selectedGraphics.add(`/winter/${winterGraphics[randomIndex]}`);
+  }
+  return Array.from(selectedGraphics);
+};
 
 export default function WinterFestival() {
   const [lang, setLang] = useState<"en" | "es">("en");
+  const [graphics, setGraphics] = useState<string[]>([]);
+  const imgRefs = useRef<(HTMLImageElement | null)[]>([]);
+
+  useEffect(() => {
+    const newGraphics = getRandomWinterGraphics(4);
+    setGraphics(newGraphics);
+  }, []);
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center relative">
@@ -106,9 +111,41 @@ export default function WinterFestival() {
         >
           {content[lang].toggleLang}
         </button>
-      </div>
 
-      <Decorations />
+        <div className="flex justify-center mt-8 space-x-4">
+          {graphics.map((graphic, index) => (
+            <motion.img
+              key={index}
+              src={graphic}
+              alt="Winter Graphic"
+              className="w-16 h-16"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 2, delay: index * 0.5 }}
+              ref={(el) => (imgRefs.current[index] = el)}
+              onClick={() => {
+                const imgElement = imgRefs.current[index];
+                if (imgElement) {
+                  imgElement.style.pointerEvents = "none"; // Disable further clicks during animation
+                  imgElement.animate(
+                    [
+                      { transform: "scale(1) rotate(0deg)" },
+                      { transform: "scale(3.5) rotate(360deg)" },
+                      { transform: "scale(1) rotate(0deg)" },
+                    ],
+                    {
+                      duration: 2000,
+                      easing: "cubic-bezier(0.68, -0.55, 0.27, 1.55)", // Bouncy easing
+                      fill: "forwards",
+                    }
+                  ).onfinish = () => {
+                    imgElement.style.pointerEvents = "auto"; // Re-enable clicks after animation
+                  };
+                }
+              }}
+            />
+          ))}
+        </div>
+      </div>
     </main>
   );
 }
