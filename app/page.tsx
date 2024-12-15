@@ -72,11 +72,11 @@ export default function WinterFestival() {
   }, []);
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center relative">
+    <main className="min-h-screen flex flex-col items-center justify-center relative pb-8">
       <Snowfall snowflakeCount={200} />
 
       <div className="flex flex-col items-center justify-center pt-8 relative z-10">
-        <h1 className="text-center text-[6rem] leading-[1]">
+        <h1 className="text-center text-[4.5rem] md:text-[6rem] leading-[1]">
           {content[lang].title.split("").map((letter, index) => (
             <span
               key={index}
@@ -87,12 +87,12 @@ export default function WinterFestival() {
           ))}
         </h1>
 
-        <div className="text-white text-[1.5rem] leading-[1.1] text-center mt-8 space-y-4">
+        <div className="text-white text-[1.5rem] leading-[1.1] text-center mt-8 space-y-2">
           <p>{content[lang].date}</p>
           <p>{content[lang].time}</p>
         </div>
 
-        <div className="mt-8 space-y-4">
+        <div className="mt-8 space-y-2">
           {content[lang].features.map((item, index) => (
             <div
               key={index}
