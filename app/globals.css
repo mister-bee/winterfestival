@@ -2,43 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-  }
+body {
+  background: black;
+  color: white;
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-black text-white;
-  }
-}
-
-/* Festival-specific styles */
 .text-green-500 {
   color: #22c55e;
-}
-
-.text-green-600 {
-  color: #16a34a;
 }
 
 .text-red-500 {
   color: #ef4444;
 }
 
+.bg-red-500 {
+  background-color: #ef4444;
+}
+
+.bg-green-500 {
+  background-color: #22c55e;
+}
+
 .bg-yellow-300 {
   background-color: #fde047;
-}
-
-.bg-yellow-400:hover {
-  background-color: #facc15;
-}
-
-.bg-black {
-  background-color: #000000;
 }
