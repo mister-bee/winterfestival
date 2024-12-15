@@ -1,101 +1,132 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+import { motion } from "framer-motion";
+import Snowfall from "react-snowfall";
+import { Balsamiq_Sans } from "next/font/google";
+import { Button } from "@/components/ui/button";
+
+const balsamiq = Balsamiq_Sans({ weight: "400", subsets: ["latin"] });
+
+const content = {
+  en: {
+    title: "Tyrrell Winter Festival!",
+    date: "Wednesday, Dec 18th",
+    time: "4 to 6 pm",
+    features: ["Music!", "Food!", "Arts and crafts", "Maybe even Santa"],
+    toggleLang: "Español",
+  },
+  es: {
+    title: "¡Festival de Invierno Tyrrell!",
+    date: "Miércoles, 18 de Diciembre",
+    time: "4 a 6 pm",
+    features: [
+      "¡Música!",
+      "¡Comida!",
+      "Artes y manualidades",
+      "Tal vez hasta Santa",
+    ],
+    toggleLang: "English",
+  },
+};
+
+export default function WinterFestival() {
+  const [lang, setLang] = useState<"en" | "es">("en");
+
+  const toggleLanguage = () => {
+    setLang(lang === "en" ? "es" : "en");
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="min-h-screen bg-black overflow-hidden relative">
+      <Snowfall snowflakeCount={200} />
+      <div className="container mx-auto px-4 py-12 relative z-10">
+        <motion.h1
+          className={`text-8xl md:text-9xl font-extrabold text-center mb-12 ${balsamiq.className}`}
+          initial={{ scale: 0.5, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {content[lang].title.split("").map((letter, index) => (
+            <span
+              key={index}
+              className={`inline-block ${
+                index % 2 === 0 ? "text-green-500" : "text-red-500"
+              }`}
+            >
+              {letter}
+            </span>
+          ))}
+        </motion.h1>
+        <motion.div
+          className="text-4xl md:text-5xl text-center text-white mb-16 font-bold"
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+        >
+          <p className="mb-6">{content[lang].date}</p>
+          <p>{content[lang].time}</p>
+        </motion.div>
+        <motion.div
+          className="flex flex-wrap justify-center gap-8 mb-16"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+        >
+          {content[lang].features.map((item, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-full px-8 py-4 text-3xl font-bold text-green-600 shadow-lg transform hover:scale-110 transition-transform duration-200"
+            >
+              {item}
+            </div>
+          ))}
+        </motion.div>
+        <Decorations />
+        <div className="text-center mt-16">
+          <button
+            onClick={toggleLanguage}
+            className="bg-yellow-300 text-green-600 text-2xl px-8 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors duration-200"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            {content[lang].toggleLang}
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
+  );
+}
+
+function Decorations() {
+  return (
+    <>
+      <motion.img
+        src="/placeholder.svg?height=100&width=100"
+        alt="Snowman"
+        className="absolute top-1/4 left-10 w-24 h-24"
+        animate={{ y: [0, -10, 0] }}
+        transition={{ repeat: Infinity, duration: 2 }}
+      />
+      <motion.img
+        src="/placeholder.svg?height=100&width=100"
+        alt="Christmas Tree"
+        className="absolute bottom-1/4 right-10 w-32 h-32"
+        animate={{ rotate: [0, 5, -5, 0] }}
+        transition={{ repeat: Infinity, duration: 3 }}
+      />
+      <motion.img
+        src="/placeholder.svg?height=100&width=100"
+        alt="Gift"
+        className="absolute top-3/4 left-1/4 w-16 h-16"
+        animate={{ scale: [1, 1.1, 1] }}
+        transition={{ repeat: Infinity, duration: 1.5 }}
+      />
+      <motion.img
+        src="/placeholder.svg?height=100&width=100"
+        alt="Candy Cane"
+        className="absolute top-1/3 right-1/4 w-20 h-20"
+        animate={{ rotateY: 360 }}
+        transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
+      />
+    </>
   );
 }
