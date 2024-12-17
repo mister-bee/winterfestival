@@ -147,10 +147,23 @@ export default function WinterFestival() {
             />
           ))}
         </div>
+
+        {/* Menu button with scroll functionality */}
+        <button
+          onClick={() => {
+            window.scrollTo({
+              top: document.documentElement.scrollHeight,
+              behavior: "smooth",
+            });
+          }}
+          className="mt-8 mb-16 text-[1.5rem] text-white hover:text-green-500 transition-colors duration-300"
+        >
+          Menu ↓
+        </button>
       </div>
 
       {/* Full-screen flyer below all content */}
-      <div className="w-full mt-16">
+      <div className="w-full mt-24">
         <img
           src={lang === "en" ? "/flier_en.png" : "/flier_es.png"}
           alt="Festival Flyer"
