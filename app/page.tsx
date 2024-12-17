@@ -8,21 +8,24 @@ import { motion } from "framer-motion";
 
 const content = {
   en: {
-    title: "Tyrrell Winter Festival!",
-    date: "Wednesday, Dec 18th",
-    time: "4 to 6 pm",
-    features: ["Music!", "Food!", "Arts and crafts", "Maybe even Santa"],
+    title: "Event Canceled",
+    date: "Unfortunately, due to a break-in last night",
+    time: "The Winter Festival has been postponed",
+    features: [
+      "We will reschedule in January",
+      "Thank you for understanding",
+      "Stay tuned for updates",
+    ],
     toggleLang: "Español",
   },
   es: {
-    title: "¡Festival de Invierno Tyrrell!",
-    date: "Miércoles, 18 de Diciembre",
-    time: "4 a 6 pm",
+    title: "Evento Cancelado",
+    date: "Desafortunadamente, debido a un robo anoche",
+    time: "El Festival de Invierno ha sido pospuesto",
     features: [
-      "¡Música!",
-      "¡Comida!",
-      "Artes y manualidades",
-      "Tal vez hasta Santa",
+      "Reprogramaremos en enero",
+      "Gracias por su comprensión",
+      "Estén atentos a las actualizaciones",
     ],
     toggleLang: "English",
   },
@@ -80,7 +83,7 @@ export default function WinterFestival() {
           {content[lang].title.split("").map((letter, index) => (
             <span
               key={index}
-              className={index % 2 === 0 ? "text-green-500" : "text-red-500"}
+              className={index % 2 === 0 ? "text-red-500" : "text-red-700"}
             >
               {letter}
             </span>
@@ -96,7 +99,7 @@ export default function WinterFestival() {
           {content[lang].features.map((item, index) => (
             <div
               key={index}
-              className="text-green-500 text-[1.5rem] leading-[1.2] text-center"
+              className="text-white text-[1.5rem] leading-[1.2] text-center"
             >
               {item}
             </div>
@@ -105,9 +108,7 @@ export default function WinterFestival() {
 
         <button
           onClick={() => setLang(lang === "en" ? "es" : "en")}
-          className={`mt-8 text-[1rem] px-6 py-2 font-bold text-white ${
-            lang === "en" ? "bg-red-500" : "bg-green-500"
-          }`}
+          className="mt-8 text-[1rem] px-6 py-2 font-bold text-white bg-red-500"
         >
           {content[lang].toggleLang}
         </button>
@@ -118,7 +119,7 @@ export default function WinterFestival() {
               key={index}
               src={graphic}
               alt="Winter Graphic"
-              className="w-16 h-16"
+              className="w-16 h-16 opacity-50"
               animate={{ y: [0, -10, 0] }}
               transition={{ repeat: Infinity, duration: 2, delay: index * 0.5 }}
               ref={(el) => {
@@ -147,28 +148,6 @@ export default function WinterFestival() {
             />
           ))}
         </div>
-
-        {/* Menu button with scroll functionality */}
-        <button
-          onClick={() => {
-            window.scrollTo({
-              top: document.documentElement.scrollHeight,
-              behavior: "smooth",
-            });
-          }}
-          className="mt-8 mb-16 text-[1.5rem] text-white hover:text-green-500 transition-colors duration-300"
-        >
-          Menu ↓
-        </button>
-      </div>
-
-      {/* Full-screen flyer below all content */}
-      <div className="w-full mt-24">
-        <img
-          src={lang === "en" ? "/flier_en.png" : "/flier_es.png"}
-          alt="Festival Flyer"
-          className="w-full h-auto"
-        />
       </div>
     </main>
   );
