@@ -72,7 +72,7 @@ export default function WinterFestival() {
   }, []);
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center relative pb-8">
+    <main className="min-h-screen flex flex-col items-center justify-start relative">
       <Snowfall snowflakeCount={200} />
 
       <div className="flex flex-col items-center justify-center pt-8 relative z-10">
@@ -127,7 +127,7 @@ export default function WinterFestival() {
               onClick={() => {
                 const imgElement = imgRefs.current[index];
                 if (imgElement) {
-                  imgElement.style.pointerEvents = "none"; // Disable further clicks during animation
+                  imgElement.style.pointerEvents = "none";
                   imgElement.animate(
                     [
                       { transform: "scale(1) rotate(0deg)" },
@@ -136,17 +136,26 @@ export default function WinterFestival() {
                     ],
                     {
                       duration: 2000,
-                      easing: "cubic-bezier(0.68, -0.55, 0.27, 1.55)", // Bouncy easing
+                      easing: "cubic-bezier(0.68, -0.55, 0.27, 1.55)",
                       fill: "forwards",
                     }
                   ).onfinish = () => {
-                    imgElement.style.pointerEvents = "auto"; // Re-enable clicks after animation
+                    imgElement.style.pointerEvents = "auto";
                   };
                 }
               }}
             />
           ))}
         </div>
+      </div>
+
+      {/* Full-screen flyer below all content */}
+      <div className="w-full mt-16">
+        <img
+          src={lang === "en" ? "/flier_en.png" : "/flier_es.png"}
+          alt="Festival Flyer"
+          className="w-full h-auto"
+        />
       </div>
     </main>
   );
